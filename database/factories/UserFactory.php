@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -40,6 +41,30 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    public function quote(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role'          => 'staff',
+            'department_id' => Department::firstOrCreate(['slug' => 'quote'], ['name' => 'Quote'])->id,
+        ]);
+    }
+
+    public function permit(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role'          => 'staff',
+            'department_id' => Department::firstOrCreate(['slug' => 'permit'], ['name' => 'Permit'])->id,
+        ]);
+    }
+
+    public function operations(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role'          => 'staff',
+            'department_id' => Department::firstOrCreate(['slug' => 'operations'], ['name' => 'Operations'])->id,
         ]);
     }
 }
